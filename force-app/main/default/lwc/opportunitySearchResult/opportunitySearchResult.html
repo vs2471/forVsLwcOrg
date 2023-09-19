@@ -1,0 +1,41 @@
+<template>
+    <lightning-card>
+    <lightning-tabset>
+        <lightning-tab label="Data Table">
+            <lightning-card title={title}>
+                <!-- {stageName} -->
+                <template if:true={loading}>
+                    <div class="slds-align_absolute-center">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+                <template if:true={opportunity}>
+                    <!-- <template for:each={opportunity} for:item="opp">
+                        <p key={opp.id}>{opp.Name}, {opp.Amount}, {opp.ExpectedRevenue}</p>
+                    </template> -->
+                    <div style="height:300px;" class="slds-scrollable" tabindex="0">
+                        <lightning-datatable
+                            key-field="Id"
+                            data={opportunity}
+                            columns={columns}>
+                        </lightning-datatable>
+                    </div>
+                </template>        
+            </lightning-card>
+        </lightning-tab>
+        <lightning-tab label="Gallery">
+            <div class="slds-scrollable_y">
+                <lightning-layout multiple-rows>
+                    <template for:each={opportunity} for:item="opp">
+                        <div class="ll-item" key={opp.id}>
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                                <c-opp-tile onoppselect={updateSelectedTile} opp-id={selectedOppId} opportunity={opp}></c-opp-tile>
+                            </lightning-layout-item>
+                        </div>
+                    </template>
+                </lightning-layout>
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+</lightning-card>
+</template>
